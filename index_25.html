@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composition</title>
+</head>
+<body>
+    <script>
+        function add(a, b){
+            return a + b;
+        }
+        function square(val) {
+            return val * val;
+        }
+        const addResult = add(2, 2);
+        console.log(square(addResult));
+
+        //What if i want a function which can help me to do the above task in sequence.
+        //  You can do so ,like this
+        function addTwoandSquare(a, b) {
+            return square(add(a, b));
+        }
+        console.log(addTwoandSquare(4,4));
+
+        //But what to do if i had so many functions like this ,so will i make upperfunction for every task ,the answer is no ,at that time composition helps you
+
+        function composeTwoFunction(fn1, fn2){
+            return function (a, b){
+                return fn2(fn1(a, b));
+            };
+        }
+        //With modern javascript you can write the above code as
+        // const c2f = (fn1, f2) => (a, b) => f2(fn1(a,b));
+        // const task2 = c2f(add, square);
+        // console.log(task2(2, 1));
+
+        const task = composeTwoFunction(add, square);
+
+        console.log(task(2,3));
+
+        //What if you want the above two numbers to be multiplied then gets squared ,then you can just make a multiply function and put it over there ,this is a advantage of composition
+        function multiply(a , b){
+            return a * b;
+        }
+        const task3  = composeTwoFunction(multiply, square);
+
+        console.log(task3 (2,3));
+
+        //What if you want to compose unlimited functions, you can do so by
+
+        function multiply2(args){
+            return args[0] * args[1] ;
+        }//This function is created because compose function was giving NaN as an answer ,the reason of that was we had passed unlimited values in compose function as our values are arrays but our multiply function was having simple 2 integers.
+
+        //That's why i have a function multiply2 which will be having arrays as an argument and return the multiple of zeroth and first index.
+
+        function compose(...fns){
+            return function(...values){
+               return fns.reduce((a, b) => b(a), values)
+            };
+            // 1) ...fns represent unlimited functions
+            // 2) ...values represent unlimited values/arguments
+            // 3) fns.reduce is used to move from right to left as we are moving from right function to left function that's why so,
+            // 4) (a, b) represent two functions and b(a) represent function a is wrapped up in b and values are the numbers or the arguments which will be passed in the function .
+        }
+        const tassk = compose(multiply2, square);
+        console.log(tassk(4, 4));
+
+        //You can write the above code in modern javascript as
+        const composeAll = (...fns) => (...val) => fns.reduce((a, b) => b(a), val);
+        const tassk2 = composeAll(multiply2, square ,(val) => val + 1);
+        //You can even pass new functions also as it is an unlimited function now, as here i have passed a arrow function .
+        //You can even pass simple function also as,
+        // const tassk2 = composeAll(multiply2, square, function(val) {return val + 1})
+        
+        console.log(tassk2(1, 4));
+
+
+    </script>
+</body>
+</html>

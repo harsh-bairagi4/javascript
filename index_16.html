@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Listener</title>
+</head>
+<body>
+    <nav class="block">
+        <p class="paragraph">Welcome to my website</p>
+    </nav>
+
+    <div class="block">
+        <h4 id="name-block">Hey There, My name is <span class="te" id="username">Harsh Bairagi</span></h4>
+        <pre><code>console.log("Hey There")</code></pre>
+
+    </div>
+    <div class="ram2">
+        <div class="ram">
+            <h1> Hello Everyone, Kya bolte!</h1>
+        </div>
+        <p>My name is Khan and I am not a terrorist</p>
+    </div>
+    <p class="block">Here is a code for you</p>
+
+    <!-- What event can be done with this button, most probably click event -->
+    <button onclick="console.log('Hey I am Clicked')">Click Me</button> 
+    <!-- I had given a onclick event to it, that onclick what task you have to perform, this is a one way to do this task but it's not an effective way to do so ,that's why you should try it in another way -->
+    
+    <button onclick="handleButtonClick()">Click Me @</button> 
+    <button id="button">Click Me $</button>
+    <button id="preferred">Click Me %</button>
+    <button id="preferred2">Click Me &</button>
+   <script>
+    //The other way is you can make a function of it.
+    function handleButtonClick(){
+        console.log ("That Button is clicked");
+        alert("Hello Bhai");
+    } //And now you can call this function in onclick.
+
+    //But it is also not a good way.
+
+    //The thing you can do is :
+    //Step 1: Give ID to that button ,so that you can identify it uniquely in JS.
+    //Step 2: Then get that element through id
+    //Step 3: Now attach event listener to that element.
+
+    const button3 = document.getElementById("button");
+    button3.onclick = function() { // You can even make a arrow funtion here
+
+        console.log("Hey I am button 3 and I am clicked");
+
+    }; //But there is a problem with this thing ,that if you write another script file and put the same thing in that with another content it will print that content 
+
+    //So the preferred way to attach eventListener is:
+    const preferred = document.getElementById("preferred");
+    preferred.addEventListener('click', function(){
+        console.log("I am clicked");
+    });
+    //It is a preferred way because if you write another code for this button in another script ,then it will print both the thing the content of this script file also and the content of another script file also.
+    
+    const name = document.getElementById('name-block');
+    preferred.addEventListener("click", () => {
+        name.style.color = "red"; //Through this we have changed the colour of the text on click event.
+        console.log(name.style.color); //You can even access the colour.
+    });
+
+    //Toggle effect
+    preferred2.addEventListener("click", () => {
+      if  (name.style.color == "red"){
+        name.style.color = "blue";
+      }
+      else{
+        name.style.color = "red";
+      }
+    });
+
+    //Remove effect
+    // const allChildren = document.querySelector("body").children;
+    // for (let i = 0; i < allChildren.length; i++) {
+    //     allChildren.item(i).addEventListener("click" , ()=>{
+    //         allChildren.item(i).remove();
+    //     });
+    // }
+   </script>
+   <script>
+        button3.onclick = function(){
+        console.log("Hey I am button 3 in second script and I am clicked");
+        } //So, because of this our function is getting over-ridden
+   </script>
+</body>
+</html>

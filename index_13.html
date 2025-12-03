@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Query Selector</title>
+  </head>
+
+  <body>
+    <nav class="block-1">
+      <p class="paragraph">Welcome to my website</p>
+    </nav>
+    <!-- I have created some another div below -->
+    <div>
+      <div>
+        <h3>This is div 2</h3>
+      </div>
+    </div>
+    <div class="block">
+      <h4>Hey There, My name is <span id="username">Harsh Bairagi</span></h4>
+      <div class="block">
+        <h2>Namaste</h2>
+      </div>
+      <p class="paragraph">Here is a code for you</p>
+      <pre><code>console.log("Hello Everyone")</code></pre>
+    </div>
+    <script>
+      //query selector
+
+      /*
+        selectors
+        - tag name
+        - id #
+        - class .
+        */
+
+      // const body = document.querySelector("body");
+      // console.log(body);
+      // body.innerHTML = "<h1>Hacked !</h1>";
+      //The whole inner HTML will be converted to Hacked.
+
+      //You can even access innerHTML as it will print the whole HTML content ,
+      // console.log(body.innerHTML);
+
+      //The below line will print the div block content.
+      const div2 = document.querySelector("div");
+      console.log(div2.innerHTML);
+
+      const div = document.querySelector("div");
+      div.innerHTML = "<h1>This is Hacked !</h1>";
+      //So the div which will be changed from the above lines will be the first div
+
+      //But what if i put the below one div to the top of the first one div, so it will change that div, by this we get to know that it changes that thing which comes first.
+
+      //So basically query selector selects that block which comes first e.g. first element.
+
+      // const username = document.querySelect("#username");
+      // console.log(username);
+
+      // console.log(username.innerHTML); //\You cannot select like this, as there is no html in the id username, although it will print the name but it is not a good practice to do so.
+      //So what can you do is ,just write innerText.
+
+      console.log(username.innerText);
+      username.innerText = "John Cena"; //This will change the text in the id username.
+
+      const ele = document.querySelector(".paragraph");
+      console.log(ele.innerHTML);
+
+      const element = document.querySelector(".block");
+      console.log(element.children); // This will print the children of the class block
+      console.log(element.parentElement.children); // Basically it is saying that, print all the childrens of the parent and the parent should be of the "element".
+      //Note: one script tag is of the server in the console.
+
+      // .querySelectorAll returns all the elements which is having the same name.
+      const elements = document.querySelectorAll(".block");
+      console.log(elements);
+      //The above line will give me a node list of all the classes which will be having block as their name.
+      //You can even access the text through for-Each function
+
+      elements.forEach((e) => {
+        console.log(e.innerHTML);
+      });
+    </script>
+  </body>
+</html>

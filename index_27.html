@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generators</title>
+</head>
+
+<body>
+    <h1>Iterators</h1>
+    <h1>Generators</h1>
+    <h1>Yield</h1>
+    <button id="btn">Get Next</button>
+    <script>
+        // 1. Iterators
+        for (const val of [1, 2, 3, 4, 5]) {
+            console.log(val);
+        }
+        console.log("\n");
+        //But how does it knows form which to which move.
+        //Because there is an built in function of iterators in arrays.
+
+        //First we will make our own iterator function
+        function makeIterator(start = 0, end = Infinity, step = 1) {
+            let nextStart = start;
+            let iterationCount = 0;
+
+            return {
+                next() {
+                    let result;
+                    if (iterationCount < end) {
+                        result = { value: nextStart, done: false }
+                        nextStart = nextStart + step;
+                        iterationCount++;
+                        return result;
+                    }
+                    return { value: iterationCount, done: true }
+                },
+            };
+        }
+
+        const myIterator = makeIterator(2, 10, 2);
+        let result = myIterator.next();
+
+        while(!result.done) {
+            console.log(result.value);
+            result = myIterator.next();
+        }
+
+        //This is my custom iterator function ,but still I can't use it in for loop
+
+        /* for(const val of makeIterator(1, 20)){
+            console.log(val);
+        } */
+
+        //This will give me error that makeIterator is not a function or its return vaue is not iterable, this is because this is a custom iterator and for each loop is a built in package 
+
+        //But what if i want a iterator which can be used by javascript for each.
+        //At that time generators functions helps us
+
+       /* function count() {
+            yield 1;
+            yield 2;
+            yield 3;
+            yield 4;
+            yield 5;
+        } */
+     //This will give us error as yield keyword cannot be defined in normal function,to use yield keyword we have to use generator function and generator function is made with the help of " * " sign after function as function* ,like i did below
+
+        function* count() {
+            yield 1;
+            yield 2;
+            yield 3;
+            yield 4;
+            yield 5;
+        }
+        console.log(count); //This will print a generator function.
+
+        const even = count();
+        for(const val of even){
+            console.log(val);
+        }//This has written to print the values
+
+        console.log("\n");
+        //Let's make a generator function and iterator over it as our need
+        function* makeMyIteratorNew(start, end, stepSize = 1) {
+            for(let i = start; i<= end; i += stepSize){
+                yield i;
+            }
+        }
+
+        const one = makeMyIteratorNew(1, 20 , 2);
+
+        // one.next().done;
+        //These are written to show you that it also built in next() function and done value.
+
+        for (const val of one){
+            console.log(val);
+        }
+
+        //Let's make a use-case of this generator
+        const btn = document.getElementById("btn");
+       let numberOnButton = makeMyIteratorNew(1, 20, 1);
+
+        btn.addEventListener("click", () => {
+            btn.innerText = numberOnButton.next().value;
+        });
+
+    </script>
+</body>
+
+</html>

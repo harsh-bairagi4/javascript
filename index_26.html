@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIFE</title>
+</head>
+<body>
+    <h1>IIFE - Immediately Invoked Function Expression </h1>
+    <script>
+    // This functions are immediately invoked function
+    (function add(a, b){
+        let age = 20;
+        console.log(age);
+        console.log(a + b);
+    })(2, 3);
+
+    (function say(){
+        console.log("Hey");
+    })();
+
+    //In modern JS you can write the code as:
+    (() => console.log("I am Es6"))();
+
+    const value = (() => 100)();
+    console.log(value);
+
+    let data; // Here the initial value of data variable is undefined or null 
+
+    async function getData() {
+        data = await fetch(); // Then it moved to the value which will be fetched from any api.
+    }
+
+    //So instead of doing the thing like this we can do this by IIFE
+
+    // const ans = (async () => await fetch ())();
+    
+
+    //We would also use IIFE to create private and public varibles and methods.
+    const atm = (function (initialBalance) {
+        let balance = initialBalance; //These variable has become private.
+
+        function withdraw(amt) { // And this had become publically expose
+            if(amt > balance) {
+               return "Are You Kidding?";
+            }
+            else{
+                balance -= amt;
+                return balance;
+            }
+        }
+        return {withdraw};
+    });
+
+    const harsh = atm(1000);
+    console.log(harsh.withdraw(100));
+    console.log(harsh.withdraw(200));
+    console.log(harsh.withdraw(920));
+    </script>
+</body>
+</html>

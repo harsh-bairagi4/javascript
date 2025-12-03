@@ -1,0 +1,5 @@
+Javascript is just a programming language for web applications .
+Note - Javascript has nothing to do with Java.
+Ways to use javascript:
+1. Internal Linking --> Write the javascript code inside the HTML file
+2. External Linking --> Write the javascript code in separate .js file

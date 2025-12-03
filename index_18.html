@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises</title>
+</head>
+<body>
+    <script>
+        let a = 10;
+        let b = 20;
+
+        let result = a + b; // This is a synchronous task ,which will run in  one sync and that is top to bottom.
+
+        //But there are some tasks which may take some time and does not provide result instantly and those tasks are called asynchronous tasks.
+        //For example : You are fetching some data from any server on your javascript ,that task will be a asynchronous task as you didn't know the time there e.g. how much time will it take to fetch the data.
+
+        //There is a pre-built function in JS called fetch function which is used to fetch the data from any server or URL.
+        let resultFromServer = fetch(
+            "https://jsonplaceholder.typicode.com/posts"
+        );
+        //These type of tasks are asynchronous task which will take how-much time we didn't know ,so what they return is promises.
+        
+        console.log(resultFromServer);
+
+        //So the thing happened here is that the fetch function had returned a promise that whenever it's task will get completed it will return the answer, right now the task is in pending ,but i promise you that whenver it will be completed i will return you the answer till than you do your next step or the further work 
+
+        //But what if I want to await this ,that is I want to wait here for this task to be completed then i will run my next task
+        //You can do so ,like this:
+       async function getData() {
+            let resultFromServer = await fetch(
+                "https://jsonplaceholder.typicode.com/posts"
+            );
+            console.log(resultFromServer);
+            //To represent this data more precisely you can use .json() and you need to write await there also before that line.
+            console.log(await resultFromServer.json());
+        }
+        getData();
+        console.log(result); // This line gets printed before the printing of getData function but getData function is executed first then also the result is printed on the console before the result of getData function ,the reason of this is getData function just gets called and then the control moves to the line number 39 and line number 39 does it work (which is to print the result) and getData function take it's time then it gets printed . 
+        
+        //What i did above is that made a fetch line e.g. await, but you can't do it directly just by putting the word await before fetch ,for that you need to make a function which will be a asynchronous function ,because you know that this task will be async task ,you can do so by putting the word async before function ,as you cannot make the command await without making the function async
+
+        //The other way to print the above thing is :
+        fetch("https://jsonplaceholder.typicode.com/posts")
+        .then((data) => {
+            console.log(data);
+        })//This call will print the data
+        .catch((error) => {
+            console.log(error);
+        })//This call will print the error
+
+    </script>
+</body>
+</html>
